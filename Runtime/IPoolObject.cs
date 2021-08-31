@@ -1,4 +1,4 @@
-﻿namespace Pool
+﻿namespace Lonfee.ObjectPool
 {
 
     /// <summary>

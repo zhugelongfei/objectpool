@@ -1,0 +1,25 @@
+{
+  "name": "com.lonfee.unity.package.objectpool",
+  "displayName": "Lonfee Object Pool",
+  "description": "Object pool for unity.",
+  "version": "1.0.0",
+  "unity": "2019.4",
+  "relatedPackages": {},
+  "repository": {
+    "type": "git",
+    "url": "git@www.lonfee.cn:/git/objectpool.git",
+    "revision": "HEAD"
+  },
+  "hideInEditor": false,
+  "author": {
+    "name": "Lonfee",
+    "email": "18519720472@163.com"
+  },
+  "samples": [
+    {
+      "displayName": "MiniGame",
+      "description": "Contains sample trigger that damage enemy when player move into trap",
+      "path": "Samples~/MiniGame"
+    }
+  ]
+}

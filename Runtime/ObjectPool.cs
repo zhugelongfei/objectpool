@@ -1,37 +1,37 @@
 ﻿using System.Collections.Generic;
 
-namespace Pool
+namespace Lonfee.ObjectPool
 {
     /// <summary>
     /// Simple object pool
     /// </summary>
     /// <typeparam name="T">Type of object</typeparam>
-    public class SimpleObjectPool<T> where T : IPoolObject
+    public class ObjectPool<T> where T : IPoolObject
     {
         /// <summary>
-        /// 创建池物体的工厂
+        /// factory for create object
         /// </summary>
         private IPoolObjectFactory<T> factory;
 
         /// <summary>
-        /// 每次需要创建物体时，创建的数量
+        /// per create count when need to create
         /// </summary>
         private int createCountPerCreation;
 
         /// <summary>
-        /// 空闲物体最大数量
+        /// max object count in pool
         /// </summary>
         private int maxObjectCount;
 
         /// <summary>
-        /// 池列表
-        /// <para>空闲物体列表</para>
+        /// pool
+        /// <para>unused objects</para>
         /// </summary>
         private LinkedList<T> poolList;
 
         /// <summary>
-        /// 使用列表
-        /// <para>正在使用的物体列表</para>
+        /// used set
+        /// <para>current in using</para>
         /// </summary>
         private HashSet<T> usedCache;
 
@@ -39,9 +39,10 @@ namespace Pool
         /// Constructor function
         /// </summary>
         /// <param name="factory">Factory of object pool. It must not be null</param>
-        /// <param name="maxItemCount">Maximum count of objects in the pool</param>
+        /// <param name="initItemCount">Init count on pool create</param>
         /// <param name="createCountPerCreation">Create count per creation</param>
-        public SimpleObjectPool(IPoolObjectFactory<T> factory, int maxItemCount = 10, int createCountPerCreation = 5)
+        /// <param name="maxItemCount">Maximum count of objects in the pool</param>
+        public ObjectPool(IPoolObjectFactory<T> factory, int initItemCount = 1, int createCountPerCreation = 1, int maxItemCount = 10)
         {
             if (factory == null)
                 throw new System.Exception("Factory of the object pool is null.");
@@ -51,6 +52,10 @@ namespace Pool
             this.factory = factory;
             poolList = new LinkedList<T>();
             usedCache = new HashSet<T>();
+
+            // create item by init count
+            if (initItemCount > 0)
+                CreateObjectByCount(initItemCount);
         }
 
         /// <summary>
@@ -62,22 +67,22 @@ namespace Pool
             if (obj == null)
                 return;
 
-            //如果当前使用集合中包含此物体，那么从使用集合中移除此物体
+            // 1: remove from used collection
             if (usedCache.Contains(obj))
             {
                 usedCache.Remove(obj);
             }
 
+            // 2: push to pool
             if (poolList.Count >= maxObjectCount)
             {
-                //空闲物体已达到最大值，不放入池，直接销毁
+                // oh, the pool is fully, destroy it.
                 obj.OnDestroy();
             }
             else
             {
-                //执行放入回调
+                // push it to pool
                 obj.OnPush();
-                //放入池中
                 poolList.AddFirst(obj);
             }
         }
@@ -91,7 +96,6 @@ namespace Pool
             if (objectList == null)
                 return;
 
-            //遍历集合，放入池中
             foreach (T item in objectList)
             {
                 Push(item);
