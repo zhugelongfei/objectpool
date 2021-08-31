@@ -14,12 +14,5 @@
   "author": {
     "name": "Lonfee",
     "email": "18519720472@163.com"
-  },
-  "samples": [
-    {
-      "displayName": "MiniGame",
-      "description": "Contains sample trigger that damage enemy when player move into trap",
-      "path": "Samples~/MiniGame"
-    }
-  ]
+  }
 }
