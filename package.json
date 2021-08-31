@@ -7,7 +7,7 @@
   "relatedPackages": {},
   "repository": {
     "type": "git",
-    "url": "git@www.lonfee.cn:/git/objectpool.git",
+    "url": "git@github.com:zhugelongfei/objectpool.git",
     "revision": "HEAD"
   },
   "hideInEditor": false,
