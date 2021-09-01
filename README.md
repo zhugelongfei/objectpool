@@ -17,5 +17,5 @@
 
 # 使用方法
 - 实现IPoolObject接口，来管理对象Ctor（有无参数取决于工厂类），Pop，Push，和OnDestroy的处理。
-- 实现IPoolObjectFactory借口，用以创建上一步的对象
+- 实现IPoolObjectFactory接口，用以创建上一步的对象
 - 创建ObjectPool对象，构造函数中将工厂对象传入即可。
